@@ -1,53 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
+import WalletConnected from './components/WalletConnected';
+import { checkIfWalletIsConnected, connectWallet } from './helpers/auth';
 
 // Constants
-const TWITTER_HANDLE = '_buildspace';
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+
+const TEST_GIFS = [
+  'https://media.giphy.com/media/gk3R16JhLP8RUka2nD/giphy.gif',
+  'https://media.giphy.com/media/DgLsbUL7SG3kI/giphy.gif',
+  'https://media.giphy.com/media/cBIooxvKerol2/giphy.gif',
+  'https://media.giphy.com/media/QWLtrEtGZEKsxjlPre/giphy.gif',
+];
 
 const App = () => {
   const [walletAddress, setWalletAddress] = useState(null);
-
-  // check to  see if a phantom wallet is connected in the user's browser. Phantom injects a 'solana' property (itself an object) into the window object
-  // this function checks to see if that prop is present.
-  const checkIfWalletIsConnected = async () => {
-    try {
-      const { solana } = window;
-      if (solana) {
-        // check for phantom wallet on solana object
-        if (solana.isPhantom) {
-          console.log('Phantom Wallet has been found!');
-
-          // solana object provides this in built function to check if the this app is authorised on the users wallet
-          const response = await solana.connect({ onlyIfTrusted: true });
-          console.log(
-            'connected with public key',
-            response.publicKey.toString()
-          );
-          setWalletAddress(response.publicKey.toString());
-        } else {
-          alert('Solana object not found! Get a Phantom Wallet');
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const connectWallet = async () => {
-    const { solana } = window;
-    if (solana) {
-      const response = await solana.connect();
-      console.log('Connected with Public Key:', response.publicKey.toString());
-      setWalletAddress(response.publicKey.toString());
-    }
-  };
+  const [inputValue, setInputValue] = useState('');
+  const [gifList, setGifList] = useState([]);
 
   const renderNotConnectedContainer = () => (
     <button
       className="cta-button connect-wallet button"
-      onClick={connectWallet}
+      onClick={() => connectWallet(setWalletAddress)}
     >
       Connect to Wallet
     </button>
@@ -57,12 +30,22 @@ const App = () => {
 
   useEffect(() => {
     const onLoad = async () => {
-      await checkIfWalletIsConnected();
+      await checkIfWalletIsConnected(setWalletAddress);
     };
     window.addEventListener('load', onLoad);
     // wait until the page is loaded before running the function (recomended by Phantom)
     return () => window.removeEventListener('load', onLoad);
-  });
+  }, []);
+
+  useEffect(() => {
+    if (walletAddress) {
+      console.log('Fetching GIF list');
+      // call solana program here, this will fetch the data like a axios request
+
+      //set gif list to state
+      setGifList(TEST_GIFS);
+    }
+  }, [walletAddress]);
 
   return (
     <div className="App">
@@ -70,19 +53,18 @@ const App = () => {
         <div className="header-container">
           <p className="header">🖼 GIF Portal</p>
           <p className="sub-text">
-            View your GIF collection in the metaverse ✨
+            The Home of Rick & Morty GIFS in the metaverse
           </p>
           {/* Add the condition to show this only if we don't have a wallet address */}
           {!walletAddress && renderNotConnectedContainer()}
-        </div>
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
+          {walletAddress && (
+            <WalletConnected
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              gifList={gifList}
+              setGifList={setGifList}
+            />
+          )}
         </div>
       </div>
     </div>
