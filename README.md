@@ -1,16 +1,21 @@
-# buildspace Solana GIF Portal Project
+# The Rick & Mortyverse - A Rust/React Solana App 
 
-### **Welcome 👋**
-To get started with this course, clone this repo and follow these commands:
+## Overview
+This project was developed as part of Buildspace's Solana GIF Portal Project. The front end for the project is simply a respository for Rick & Morty Gifs. Users can post new Gifs and see the collection, once they authenticate via their phantom wallet. place to post and see Rick & Morty Gifs. The
 
-1. Run `npm install` at the root of your directory
-2. Run `npm run start` to start the project
-3. Start coding!
-
-### **What is the .vscode Folder?**
-If you use VSCode to build your app, we included a list of suggested extensions that will help you build this project! Once you open this project in VSCode, you will see a popup asking if you want to download the recommended extensions :).
+## How to use 
 
 
+## Tech Stack 
 
-### **Questions?**
-Have some questions make sure you head over to your [buildspace Dashboard](https://app.buildspace.so/courses/CObd6d35ce-3394-4bd8-977e-cbee82ae07a3) and link your Discord account so you can get access to helpful channels and your instructor!
+* Javascript
+* Rust
+* React.js
+* Web3.js
+* Anchor 
+
+
+## Development Challenges & Wins
+There will several steps in this project that proved very challenging. Firstly, building Solona CLI from source in order to use it on an M1 Mac. Secondly, handling errors 
+
+Certaintly a big win was understanding how authentication can be handled on the blockchain, the process was streamlined and fairly straightfoward to implement 
