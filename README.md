@@ -15,6 +15,7 @@ This project was developed as part of Buildspace's Solana GIF Portal Project. Th
 * Anchor 
 
 
+
 ## Development Challenges & Wins
 There will several steps in this project that proved very challenging. Firstly, building Solona CLI from source in order to use it on an M1 Mac. Secondly, handling errors 
 
