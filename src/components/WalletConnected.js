@@ -1,50 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 
-const WalletConnected = ({
-  inputValue,
-  setInputValue,
-  gifList,
-  setGifList,
-}) => {
+const WalletConnected = ({ gifList, createGifAccount, handleGifSubmit }) => {
+  const [inputValue, setInputValue] = useState('');
   const onInputChange = (e) => setInputValue(e.target.value);
 
-  const handleGifSubmit = async () => {
-    if (inputValue.length > 0) {
-      console.log('Gif link:', inputValue);
-      setGifList([...gifList, inputValue]);
-      setInputValue('');
-    } else {
-      console.log('Empty input please try again.');
-    }
-  };
-  return (
-    <div className="connected-container">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleGifSubmit();
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Enter gif link!"
-          value={inputValue}
-          onChange={onInputChange}
-        />
-        <button type="submit" className="cta-button submit-gif-button">
-          Submit
+  if (gifList === null) {
+    return (
+      <div className="connected-container">
+        <button
+          className="cta-button submit-gif-button"
+          onClick={createGifAccount}
+        >
+          Do One-Time Initialization For GIF Program Account
         </button>
-      </form>
-      <div className="gif-grid">
-        {gifList.map((gif) => (
-          <div className="gif-item" key={gif}>
-            <img src={gif} alt={gif} />
-          </div>
-        ))}
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="connected-container">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleGifSubmit(inputValue, setInputValue);
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Enter gif link!"
+            value={inputValue}
+            onChange={onInputChange}
+          />
+          <button type="submit" className="cta-button submit-gif-button">
+            Submit
+          </button>
+        </form>
+        <div className="gif-grid">
+          {gifList.map((item, index) => (
+            <div className="gif-item" key={index}>
+              <img src={item.gifLink} alt={item.gifLink} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 };
 
 export default WalletConnected;
