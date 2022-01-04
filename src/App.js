@@ -9,13 +9,6 @@ import kp from './keypair.json';
 
 // Constants
 
-// const TEST_GIFS = [
-//   'https://media.giphy.com/media/gk3R16JhLP8RUka2nD/giphy.gif',
-//   'https://media.giphy.com/media/DgLsbUL7SG3kI/giphy.gif',
-//   'https://media.giphy.com/media/cBIooxvKerol2/giphy.gif',
-//   'https://media.giphy.com/media/QWLtrEtGZEKsxjlPre/giphy.gif',
-// ];
-
 // reference to the Solana program which handles accounts etc.,
 const { SystemProgram, KeyPair } = web3;
 
@@ -146,7 +139,7 @@ const App = () => {
     <div className="App">
       <div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
-          <p className="header">🖼 GIF Portal</p>
+          <p className="header">The Rick & Mortyverse</p>
           <p className="sub-text">
             The Home of Rick & Morty GIFS in the metaverse
           </p>
